@@ -1,5 +1,7 @@
 %{
-    #include<stdio.h>
+	#include<stdio.h>
+	#include<iostream>
+	#include<string>
 %}
 
 D           [0-9]
@@ -23,13 +25,13 @@ blanks      ([ \t\n]+)
 "=="        return ("EQ_OP");
 "!="        return ("NE_OP");
 "!"         return ("NOT_OP");
-"="         return ("=");
 "++"        return ("INC_OP");
 "--"        return ("DEC_OP");
 "+="        return ("ADD_TO");
 "-="        return ("SUB_TO");
 "*="        return ("MUL_TO");
 "/="        return ("DIV_TO");
+"="         return ("=");
 "+"         return ("+");
 "-"         return ("-");
 "*"         return ("*");
@@ -47,8 +49,8 @@ blanks      ([ \t\n]+)
 "}" 		return ("}");
 "[" 		return ("[");
 "]" 		return ("]");
-"(" 		return "(";
-")" 		return ")";
+"(" 		return ("(");
+")" 		return (")");
 ","         return (",");
 ";"         return (";");
 ":"         return (":");
@@ -78,6 +80,7 @@ blanks      ([ \t\n]+)
 "enum"      return ("ENUM");
 "typedef"   return ("TYPEDEF");
 "struct"    return ("STRUCT");
+"sizeof"	return ("SIZEOF");
 "if"        return ("IF");
 "else"      return ("ELSE");
 "do"        return ("DO");
@@ -96,6 +99,10 @@ blanks      ([ \t\n]+)
 <MLCOMMENT>"*/" {BEGIN INITIAL;} 
 %%
 
-int yywrap(){
-    return 1;
+void main(){
+	string s;
+	while(true){
+		cin>>s;
+		cout<<analysis(s)<<endl;
+	}
 }
