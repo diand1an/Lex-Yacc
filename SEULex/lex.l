@@ -1,36 +1,27 @@
 %{
 	#include<stdio.h>
-	#include<iostream>
-	#include<string>
+	void singleLineComment();
+	void multiLineComment();
 %}
 
 D           [0-9]
 L           [a-zA-Z]
 id          {L}({L}|{D})*
 number      {D}+(.{D}+)?(E[+-]?{digit}+)?
-blanks      ([ \t\n]+)
 
-%s          SLCOMMENT
-%s          MLCOMMENT
 %%
 
-"//"        {
-                cout<<"(SINGLE_LINE_COMMENT)"<<endl;
-                BEGIN SLCOMMENT;
-            }
-"/*"        {
-                cout<<"(MULTI_LINE_COMMENT)"<<endl;
-                BEGIN MLCOMMENT;
-            }
+"//"        { singleLineComment(); return "(SINGLE_LINE_COMMENT)" }
+"/*"        { multiLineComment(); return "(MULTI_LINE_COMMENT)" }
 "=="        return ("EQ_OP");
 "!="        return ("NE_OP");
 "!"         return ("NOT_OP");
 "++"        return ("INC_OP");
 "--"        return ("DEC_OP");
-"+="        return ("ADD_TO");
-"-="        return ("SUB_TO");
-"*="        return ("MUL_TO");
-"/="        return ("DIV_TO");
+"+="        return ("ADD_ASSIGN");
+"-="        return ("SUB_ASSIGN");
+"*="        return ("MUL_ASSIGN");
+"/="        return ("DIV_ASSIGN");
 "="         return ("=");
 "+"         return ("+");
 "-"         return ("-");
@@ -60,7 +51,6 @@ blanks      ([ \t\n]+)
 """         return (""");
 {id}        return ("INDENTIFIER");
 {number}    return ("NUMBER");
-{blanks}    {;}
 "public"    return ("PUBLIC");
 "privalite" return ("PRIVALITE");
 "protected" return ("PROTECTED");
@@ -76,7 +66,7 @@ blanks      ([ \t\n]+)
 "short"     return ("SHORT");
 "const"     return ("CONST");
 "static"    return ("STATIC");
-"auto"      return ("AUTO");
+"auto"      return ("AUASSIGN");
 "enum"      return ("ENUM");
 "typedef"   return ("TYPEDEF");
 "struct"    return ("STRUCT");
@@ -91,18 +81,28 @@ blanks      ([ \t\n]+)
 "case"      return ("CASE");
 "break"     return ("BREAK");
 "default"   return ("DEFUALT");
-.     
+.			printf<<"Error:Unmatched Characters!";
 
-<SLCOMMENT>.    {;}
-<SLCOMMENT>\n   {BEGIN INITIAL;}
-<MLCOMMENT>.|\n {;}
-<MLCOMMENT>"*/" {BEGIN INITIAL;} 
 %%
 
-void main(){
-	string s;
-	while(true){
-		cin>>s;
-		cout<<analysis(s)<<endl;
+void multiLineComment()
+{
+	char c, prev=0;
+	while((c = input())!=0) /* (EOF maps to 0) */
+	{
+		if((c =='/' && prev=='*')
+			return;
+		prev = c;
+	}
+	printf ("ERROR: unterminated comment!");
+}
+
+void singleLineComment()
+{
+	char c,prev=0;
+	while((c == input()!=0))/* (EOF maps to 0) */
+	{
+		if(c ='\'&& prev='n')
+			return;
 	}
 }
