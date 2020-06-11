@@ -1,0 +1,106 @@
+program  :declarations  
+declarations  :var_declaration  declarations  
+declarations  :fun_declaration  declarations  
+declarations  :var_declaration  
+declarations  :fun_declaration  
+var_declaration  :type  identifiers  ;  
+var_declaration  :ENUM  IDENTIFIER  {  identifiers  }  ;  
+var_declaration  :TYPEDEF  STRUCT  IDENTIFIER  {  declarations  }  ;  
+identifiers  :identifier  
+identifiers  :identifiers  ,  identifier  
+identifiers  :identifiers  ,  assign_statement  
+identifier  :assign_statement  
+identifier  :IDENTIFIER  [  NUMBER  ]  [  NUMBER  ]  
+identifier  :IDENTIFIER  [  IDENTIFIER  ]  
+identifier  :IDENTIFIER  [  NUMBER  ]  
+identifier  :IDENTIFIER  [  ]  
+identifier  :IDENTIFIER  .  IDENTIFIER  
+identifier  :IDENTIFIER  PTR_OP  IDENTIFIER  
+identifier  :IDENTIFIER  
+fun_declaration  :type  IDENTIFIER  (  parameters  )  block  
+fun_declaration  :type  IDENTIFIER  (  )  block  
+type  :IDENTIFIER  *  
+type  :CHAR  *  
+type  :CONST  CHAR  *  
+type  :INT  *  
+type  :IDENTIFIER  
+type  :VOID  
+type  :CHAR  
+type  :SHORT  
+type  :INT  
+type  :LONG  
+type  :FLOAT  
+type  :DOUBLE  
+type  :BOOL  
+type  :ENUM  
+parameters  :type  IDENTIFIER  ,  parameters  
+parameters  :type  IDENTIFIER  
+block  :{  local_declarations  statements  }  
+block  :{  local_declarations  }  
+block  :{  statements  }  
+block  :{  }  
+block  :;  
+local_declarations  :var_declaration  
+local_declarations  :local_declarations  var_declaration  
+statements  :statement  
+statements  :statements  statement  
+statement  :for_statement  
+statement  :WHILE  (  exp  )  block  
+statement  :RETURN  exp  ;  
+statement  :assign_statements  
+statement  :BREAK  ;  
+statement  :expression_statement  
+statement  :fun_statement  
+statement  :if_statement  
+statement  :SWITCH  (  identifier  )  block  
+statement  :case_statement  
+statement  :block  
+fun_statement  :IDENTIFIER  (  args  )  ;  
+for_statement  :FOR  (  var_declaration  expression_statement  exp  )  block  
+for_statement  :FOR  (  expression_statement  expression_statement  exp  )  block  
+assign_statements  :assign_statements  ,  assign_statement  
+assign_statements  :assign_statement  ;  
+assign_statements  :assign_statement  
+assign_statement  :identifier  =  exp  
+assign_statement  :*  identifier  =  exp  
+assign_statement  :identifier  ADD_ASSIGN  exp  
+assign_statement  :identifier  SUB_ASSIGN  exp  
+assign_statement  :identifier  MUL_ASSIGN  exp  
+assign_statement  :identifier  DIV_ASSIGN  exp  
+expression_statement  :;  
+expression_statement  :exp  ;  
+if_statement  :IF  (  exp  )  block  
+if_statement  :IF  (  exp  )  block  ELSE  block  
+case_statement  :CASE  simple_expression  :  statements  
+case_statement  :DEFAULT  :  statements  
+exp  :simple_expression  
+exp  :mul_expression  
+exp  :add_expression  
+exp  :eq_expression  
+exp  :and_expression  
+simple_expression  :{  args  }  
+simple_expression  :TRUE  
+simple_expression  :FALSE  
+simple_expression  :INC_OP  IDENTIFIER  
+simple_expression  :DEC_OP  IDENTIFIER  
+simple_expression  :IDENTIFIER  INC_OP  
+simple_expression  :IDENTIFIER  DEC_OP  
+simple_expression  :NOT_OP  IDENTIFIER  
+simple_expression  :'  IDENTIFIER  '  
+simple_expression  :"  IDENTIFIER  "  
+simple_expression  :NUMBER  
+simple_expression  :identifier  
+mul_expression  :exp  *  exp  
+mul_expression  :exp  /  exp  
+add_expression  :exp  +  exp  
+add_expression  :exp  -  exp  
+eq_expression  :exp  EQ_OP  exp  
+eq_expression  :exp  NE_OP  exp  
+eq_expression  :exp  >  exp  
+eq_expression  :exp  <  exp  
+eq_expression  :exp  GE_OP  exp  
+eq_expression  :exp  LE_OP  exp  
+and_expression  :exp  AND_OP  exp  
+and_expression  :exp  OR_OP  exp  
+args  :exp  
+args  :args  ,  exp  

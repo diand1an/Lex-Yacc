@@ -1,0 +1,8 @@
+1  :=  ADD_ASSIGN  SUB_ASSIGN  MUL_ASSIGN  DIV_ASSIGN  
+0  :EQ_OP  NE_OP  
+0  :OR_OP  
+0  :AND_OP  
+0  :ELSE  
+0  :<  >  LE_OP  GE_OP  
+0  :+  -  
+0  :*  /  

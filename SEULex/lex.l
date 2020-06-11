@@ -7,12 +7,12 @@
 D           [0-9]
 L           [a-zA-Z]
 id          {L}({L}|{D})*
-number      {D}+(.{D}+)?(E[+-]?{digit}+)?
+number      {D}+(.{D}+)?(E[+-]?{D}+)?
 
 %%
 
-"//"        { singleLineComment(); return "(SINGLE_LINE_COMMENT)" }
-"/*"        { multiLineComment(); return "(MULTI_LINE_COMMENT)" }
+"//"        { singleLineComment();  return "(SINGLE_LINE_COMMENT)"; }
+"/*"        { multiLineComment();  return "(MULTI_LINE_COMMENT)"; }
 "=="        return ("EQ_OP");
 "!="        return ("NE_OP");
 "!"         return ("NOT_OP");
@@ -35,7 +35,7 @@ number      {D}+(.{D}+)?(E[+-]?{digit}+)?
 ">"         return (">");
 "%"         return ("%");
 "||"        return ("OR_OP");
-"&"         return ("AND_OP")
+"&&"         return ("AND_OP")
 "{" 		return ("{");
 "}" 		return ("}");
 "[" 		return ("[");

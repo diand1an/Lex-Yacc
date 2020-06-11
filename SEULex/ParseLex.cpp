@@ -1,5 +1,9 @@
 //.l文件解析：读入并解析.l文件；并标准化正则表达式
 
+#include "stdafx.h"
+#define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable:4996)
+
 #include "stdio.h"
 #include <fstream>
 #include <iostream>
@@ -34,9 +38,9 @@ void handleQuotes(string &exp);
 //加终结符$(作为模式的最后一个字符匹配一行的结尾)
 void addDot(string &exp);
 ////读入并解析.l文件
-void readAndParseLex(vector<string> &P1, map<string, string>&reMap, vector<Rules> &rules, vector<string> P4);
+void readAndParseLex(vector<string> &P1, map<string, string>&reMap, vector<Rules> &rules, vector<string> &P4);
 //标准化
-void REStandardlization(vector<Rules> &rules, map<string, string>reMap);
+void REStandardlization(vector<Rules> &rules, map<string, string>&reMap);
 
 /*
 %{
@@ -49,7 +53,7 @@ vector<Rules>:pattern,actions
 P4
 */
 
-void read_Parse_REStandardlize(vector<string> &P1, map<string, string>&reMap, vector<Rules> &rules, vector<string> P4) {
+void read_Parse_REStandardlize(vector<string> &P1, map<string, string>&reMap, vector<Rules> &rules, vector<string>& P4) {
 	clock_t startT = clock();
 	readAndParseLex(P1, reMap, rules, P4);
 	REStandardlization(rules, reMap);
@@ -57,12 +61,13 @@ void read_Parse_REStandardlize(vector<string> &P1, map<string, string>&reMap, ve
 	cout << "Read and parse the file successfully! Times overhead: = " << (double)(endT - startT) / CLOCKS_PER_SEC << endl;
 }
 
-void readAndParseLex(vector<string> &P1, map<string, string>&reMap, vector<Rules> &rules, vector<string> P4) {
+void readAndParseLex(vector<string> &P1, map<string, string>&reMap, vector<Rules> &rules, vector<string>& P4) {
 	//读入.l文件
 	ifstream inputFile;
-	inputFile.open("lex.l", ios::in);
+	string filePath = "C:\\Users\\10176\\source\\repos\\Lex\\lib\\lex.l";
+	inputFile.open(filePath.c_str(), ios::in);
 	if (!inputFile) {
-		cout << "Filed to open c99.l!" << endl;
+		cout << "Filed to open lex.l!" << endl;
 		exit(1);
 	}
 	string line;//用于储存每行的字符串
@@ -156,10 +161,12 @@ void readAndParseLex(vector<string> &P1, map<string, string>&reMap, vector<Rules
 				}
 				//左边字符为.时
 				else if (line[0] == '.') {
+					/*
 					leftString = line[0];
 					rightString = line.substr(1);
 					trim(rightString);
 					action.push_back(rightString);
+					*/
 				}
 				//在规则表中加入这条规则
 				Rules rule;
@@ -177,7 +184,7 @@ void readAndParseLex(vector<string> &P1, map<string, string>&reMap, vector<Rules
 	inputFile.close();
 }
 
-void REStandardlization(vector<Rules> &rules, map<string, string>reMap) {
+void REStandardlization(vector<Rules> &rules, map<string, string>&reMap) {
 	//用迭代器遍历并处理map
 	for (map<string, string>::iterator i = reMap.begin(); i != reMap.end(); i++) {
 		repBrace(i->second, reMap);
@@ -351,3 +358,13 @@ void addDot(string &exp) {
 	}
 	exp = reExp;
 }
+
+/*test*/
+void main() {
+	vector<string> P1;
+	map<string, string> reMap;
+	vector<Rules> rules;
+	vector<string> P4;
+	read_Parse_REStandardlize(P1, reMap, rules, P4);
+}
+
